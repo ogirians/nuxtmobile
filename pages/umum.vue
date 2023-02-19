@@ -24,8 +24,17 @@
                 <!-- <v-card-subtitle>No RM</v-card-subtitle> -->
                 <!-- <v-card-text>nama</v-card-text> -->
                 <v-container>
-                    <v-text-field
+                    <v-select
+                    label="PILIH IDENTITAS"
+                    :items="['KTP','NO RM']"
+                    variant="underlined"
+                    v-model="jenisidentitas"
+                    ></v-select>
+                    <v-text-field v-if="jenisidentitas == 'NO RM'"
                         label="NO RM"
+                    ></v-text-field>
+                    <v-text-field v-if="jenisidentitas == 'KTP'"
+                        label="NO KTP"
                     ></v-text-field>
                     <v-dialog
                         ref="dialog"
@@ -103,6 +112,7 @@
 export default{
     data(){
         return {
+            jenisidentitas:'NO_RM',
             date: '',
             menu: false,
             modal: false,

@@ -19,7 +19,7 @@
 
                 <v-card-subtitle>Umum</v-card-subtitle>
 
-                <v-card-actions>
+                <v-card-actions class="justify-end">
                   <NuxtLink to="/umum">
                     <v-btn color="green">
                       <v-icon
@@ -50,7 +50,7 @@
                   Pendaftaran
                 </v-card-title>
                 <v-card-subtitle>JKN</v-card-subtitle>
-                <v-card-actions>
+                <v-card-actions class="justify-end">
                   <NuxtLink to="/jkn">
                     <v-btn color="green">
                       <v-icon
@@ -84,7 +84,7 @@
   
                 <v-card-subtitle>pendaftaran</v-card-subtitle>
   
-                <v-card-actions>
+                <v-card-actions class="justify-end">
                   <v-btn color="red">
                     <v-icon
                       dark
