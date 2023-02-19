@@ -20,17 +20,17 @@
                 <v-card-subtitle>Umum</v-card-subtitle>
 
                 <v-card-actions>
-                <NuxtLink to="/umum">
-                  <v-btn color="green">
-                    <v-icon
-                      dark
-                      left
-                    >
-                      mdi mdi-location-enter
-                    </v-icon>
-                    Daftar
-                  </v-btn>
-                </NuxtLink>
+                  <NuxtLink to="/umum">
+                    <v-btn color="green">
+                      <v-icon
+                        dark
+                        left
+                      >
+                        mdi mdi-location-enter
+                      </v-icon>
+                      Daftar
+                    </v-btn>
+                  </NuxtLink>
                 </v-card-actions>
               </v-card>
             </v-hover>
