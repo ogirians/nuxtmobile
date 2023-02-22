@@ -25,6 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/api.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -45,7 +46,12 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    // baseURL: '/',
+    proxy: true
+  },
+
+  proxy: {
+    '/api/': { target: 'http://172.9.1.63/api/', pathRewrite: {'^/api/': ''}, changeOrigin: true }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -55,7 +61,7 @@ export default {
       light: true,
       themes: {
         light: {
-          primary: colors.amber.darken4,
+          primary: colors.blue.darken4,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,

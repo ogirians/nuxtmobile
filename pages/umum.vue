@@ -23,11 +23,6 @@
             dark
             mt="5"
             >
-                <!-- <v-card-title>
-                    Nama
-                </v-card-title> -->
-                <!-- <v-card-subtitle>No RM</v-card-subtitle> -->
-                <!-- <v-card-text>nama</v-card-text> -->
                 <v-container>
                     <v-select
                     label="PILIH IDENTITAS"
@@ -123,6 +118,7 @@ export default{
                 tgl_lahir: ''
             },
 
+            data_pasien:'',
             tampilkan_warning : false,
             jenisidentitas:'NO RM',
             date: '',
@@ -133,15 +129,16 @@ export default{
     },
     methods: {
         //cek pasien apakah ada dalam database , harusnya gunakan fetch
-        verif_pasien(){
-            if (this.form.no_rm == '111' && this.form.tgl_lahir == '2023-02-19'){
-                console.log('ok');
-                this.$router.push({name: 'pasienInfo'})
-            }
-            else{
-                console.log('fail');
-                this.tampilkan_warning = true;
-            }
+        async verif_pasien(){
+            await this.$apirsds.$post('/api/umum/verify-patient', {
+                type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
+                number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
+                date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
+            }).then(Response => { 
+                this.data_pasien = Response.result;
+            })
+
+            this.$router.push({name : 'pasien-pasienInfo', params: this.data_pasien})
         }
     }
 }
