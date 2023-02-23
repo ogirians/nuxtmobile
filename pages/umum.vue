@@ -26,14 +26,14 @@
                 <v-container>
                     <v-select
                     label="PILIH IDENTITAS"
-                    :items="['KTP','NO RM']"
+                    :items="[{text : 'NO KTP' , value : 'no_ktp'}, {text : 'NO RM' , value : 'no_rekam_medik'}]"
                     variant="underlined"
-                    v-model="jenisidentitas"
+                    v-model="form.type_verify"
                     ></v-select>
-                    <v-text-field v-model="form.no_rm" v-if="jenisidentitas == 'NO RM'"
+                    <v-text-field v-model="form.number" v-if="form.type_verify == 'no_rekam_medik'"
                         label="NO RM"
                     ></v-text-field>
-                    <v-text-field v-model="form.no_ktp" v-if="jenisidentitas == 'KTP'"
+                    <v-text-field v-model="form.number" v-if="form.type_verify == 'no_ktp'"
                         label="NO KTP"
                     ></v-text-field>
                     <v-dialog
@@ -45,7 +45,7 @@
                     >
                         <template v-slot:activator="{ on, attrs }">
                             <v-text-field
-                                v-model="form.tgl_lahir"
+                                v-model="form.date_birth"
                                 label="TANGGAL LAHIR"
                                 readonly
                                 v-bind="attrs"
@@ -53,7 +53,7 @@
                             ></v-text-field>
                         </template>
                         <v-date-picker
-                            v-model="form.tgl_lahir"
+                            v-model="form.date_birth"
                             scrollable
                             color="#385F73"
                             >
@@ -78,18 +78,21 @@
                     <v-row class="justify-end my-3 mx-3">
                         <!-- <v-col cols="12"> -->
                             
-                            <v-btn @click="verif_pasien()" color="green" class="mx-2" small>
+                            <v-btn @click="verif_pasien()" color="green" class="mx-2" small :loading="isLoading" :disabled="isLoading">
                             <v-icon
                                 dark
                                 left
                             >
                                 mdi mdi-location-enter
                             </v-icon>
-                            Verifikasi 
+                                Verifikasi 
+                            <template v-slot:loader>
+                                <span>Loading...</span>
+                            </template>
                             </v-btn>
                             
                             <NuxtLink to="/">
-                                <v-btn color="red" small>
+                                <v-btn color="red" small :loading="isLoadingKembali">
                                     <v-icon
                                     dark
                                     left
@@ -113,9 +116,9 @@ export default{
     data(){
         return {
             form : {
-                no_rm : '',
-                no_ktp : '',
-                tgl_lahir: ''
+                type_verify : 'no_rekam_medik',
+                number : '',
+                date_birth: ''
             },
 
             data_pasien:'',
@@ -125,20 +128,32 @@ export default{
             menu: false,
             modal: false,
             menu2: false,
+            isLoading : false,
+            isLoadingKembali : false,
         }
     },
     methods: {
         //cek pasien apakah ada dalam database , harusnya gunakan fetch
         async verif_pasien(){
-            await this.$apirsds.$post('/api/umum/verify-patient', {
-                type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
-                number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
-                date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
-            }).then(Response => { 
+
+            this.isLoading = true;
+            await this.$apirsds.$post('/api/umum/verify-patient', 
+                {
+                    type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
+                    number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
+                    date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
+                }
+                // this.form
+            ).then(Response => { 
                 this.data_pasien = Response.result;
+                this.$router.push({name : 'pasien-pasienInfo', params: this.data_pasien})
+                localStorage.setItem("authToken", Response.token)
+                this.$store.commit('pasien/set', Response.result)
+            }).catch(error => {
+                console.log(error.response.data.message);
+                this.tampilkan_warning = true;
             })
 
-            this.$router.push({name : 'pasien-pasienInfo', params: this.data_pasien})
         }
     }
 }

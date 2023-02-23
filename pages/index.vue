@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="12" md="12">
-      <v-row >
+      <v-row>
           <v-col cols="12" sm="12" md="4">
             <v-hover
               v-slot="{ hover }"
