@@ -146,7 +146,7 @@ export default{
                 // this.form
             ).then(Response => { 
                 this.data_pasien = Response.result;
-                this.$router.push({name : 'pasien-pasienInfo', params: this.data_pasien})
+                this.$router.push({name : 'pasien_umum-info-pasienInfo', params: this.data_pasien})
                 localStorage.setItem("authToken", Response.token)
                 this.$store.commit('pasien/set', Response.result)
             }).catch(error => {

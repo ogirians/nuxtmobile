@@ -8,7 +8,7 @@
             <v-row 
             class="justify-end my-3 mx-3"
             >
-                <NuxtLink to="/pilih_tanggal">
+                <NuxtLink to="/pasien_umum/pilih_tanggal">
                     <v-btn color="green" class="mx-2 my-3 mt-5" small>
                         <v-icon
                             dark
