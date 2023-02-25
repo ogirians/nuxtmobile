@@ -14,8 +14,30 @@
                 </v-card>
             </v-col>
             <v-col
+            cols="12" 
+            > 
+                <v-text-field
+                label="Cari Poli..."
+                placeholder="Cari Poli ..."
+                solo
+                prepend-inner-icon="mdi mdi-magnify"
+                v-model="cari"
+                clearable
+                @click:clear="cari = ''"
+                >
+                    <template v-slot:append-outer>                        
+                           <v-btn @click="searchPoli()" class="d-flex mt-n1">cari</v-btn>
+                    </template>
+                </v-text-field>
+                
+            </v-col>
+            <!-- <v-col  md="2">
+                <v-btn class="info d-flex justify-end">cari</v-btn>
+            </v-col> -->
+           
+            <v-col
             v-for="list in list_poli"
-            cols="6"
+            cols="12" md="6" xl="3"
             >
                 <v-hover
                 v-slot="{ hover }"
@@ -33,16 +55,35 @@
                             color="white"
                             style="background-color: #385F73"
                             >
-                            <v-card-title class="justify-center info" ><div class="text-sm-h8                                                                                                                                                                                                                                            " style="color: white">{{ list.ruangan_nama }}</div></v-card-title>
+                            <v-card-text class="d-flex justify-center info text-wrap font-weight-bold text-sm-h9 text-md-h6" style="color: white;" >{{ list.ruangan_nama }}</v-card-text>
                             </v-container>
-                            <v-card-text class="justify-end">
-                                <v-row class="justify-center">
+                            <v-card-text class="d-flex justify-center">
+                                <!-- <v-row class="justify-center"> -->
                                     {{ list.instalasi_nama }} 
-                                </v-row>
+                                <!-- </v-row> -->
                             </v-card-text>
                             
                         </v-card>
                 </v-hover>
+            </v-col>
+            <v-col cols="12" md="6" xl="3" v-if = "isLoading ">
+                <v-skeleton-loader
+                class="mx-auto"
+                max-width="300"
+                type="card"
+                >
+                </v-skeleton-loader>
+            </v-col>
+            <v-col cols="12" md="6" xl="3" v-if = "isLoading ">
+                <v-skeleton-loader
+                class="mx-auto"
+                max-width="300"
+                type="card"
+                >
+                </v-skeleton-loader>
+            </v-col>
+            <v-col cols="12" class="d-flex justify-center mt-10" v-if="cari == '' || cari == null">
+                <v-btn class="info" small @click="fetcPoli()">Load More..</v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -54,21 +95,69 @@ export default{
         return {
             tgl_berkunjung : this.$route.params,
             list_poli : [],
-            // token : localStorage.getItem("authToken")
+            isLoading : false,
+            cari: '',
+            offset: 0
+        }
+    },
+    methods: {
+        async fetcPoli(){
+            this.isLoading = true;
+            // var token = localStorage.getItem("authToken");
+            // this.$apirsds.setHeader('x-authorization-token', token);
+            await this.$apirsds.$get('/api/umum/poli-rawat-jalan?limit=5&offset='+this.offset
+            ).then(Response => { 
+                Response.result.forEach(data => {
+                    this.list_poli.push(data)
+                })
+                
+                this.isLoading = false;
+                this.offset = this.offset + 5;
+            }).catch(error => {
+                if (error.response.data.code){
+                    this.$router.push({name : 'index'})
+                }
+                console.log(error.response.data.message);
+                
+        
+            })
+        },
+        async searchPoli(){
+            this.isLoading = true;
+            this.list_poli = [];
+            // var token = localStorage.getItem("authToken");
+            // this.$apirsds.setHeader('x-authorization-token', token);
+            await this.$apirsds.$post('/api/umum/search-poli', {ruangan_nama : this.cari}
+            ).then(Response => { 
+                Response.result.forEach(data => {
+                    this.list_poli.push(data)
+                })
+                
+                this.isLoading = false;
+            }).catch(error => {
+                if (error.response.data.code){
+                    this.$router.push({name : 'index'})
+                }
+                console.log(error.response.data.message);
+                
+        
+            })
+        }
+    },
+    computed: {
+
+    },
+    watch : {
+        cari : function(value) {
+            if (value == ''){
+                this.offset = 0;
+                this.list_poli = [];
+                this.fetcPoli();
+            }
         }
     },
     mounted(){
-            var token = localStorage.getItem("authToken");
-            this.$apirsds.setHeader('x-authorization-token', token);
-            this.$apirsds.$get('/api/umum/poli-rawat-jalan/all'
-                
-            ).then(Response => { 
-                this.list_poli = Response.result;
-            }).catch(error => {
-                console.log(error.response.data.message);
-                // this.tampilkan_warning = true;
-
-            })
+        this.fetcPoli();
     }
 }
 </script>

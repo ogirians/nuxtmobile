@@ -149,6 +149,7 @@ export default{
                 this.$router.push({name : 'pasien_umum-info-pasienInfo', params: this.data_pasien})
                 localStorage.setItem("authToken", Response.token)
                 this.$store.commit('pasien/set', Response.result)
+                this.$apirsds.setHeader('x-authorization-token', Response.token);
             }).catch(error => {
                 console.log(error.response.data.message);
                 this.tampilkan_warning = true;

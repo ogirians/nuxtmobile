@@ -60,10 +60,29 @@
 export default{
     data(){
         return{
-            data_pasien: this.$route.params
+            data_pasien: this.$route.params,
+            data_pasien_store : ''
+        }
+    },
+    methods: {
+        async cekPasienStore(){
+            this.data_pasien_store = this.$store.state.pasien.data_pasien;
+
+            // if(this.$route.params){
+            //     this.data_pasien = this.$route.params;
+            // }
+
+            if (this.data_pasien_store){
+                this.data_pasien = this.data_pasien_store;
+            } else{
+                this.$router.push({name: 'umum'});
+            }
         }
     }
-
-    
+    ,
+    mounted(){
+        
+        this.cekPasienStore();
+    }
 }
 </script>
