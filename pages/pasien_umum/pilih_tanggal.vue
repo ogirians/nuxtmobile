@@ -35,7 +35,7 @@
                             color="white"
                             style="background-color: #385F73"
                             >
-                            <v-card-title class="justify-center info" ><div class="text-sm-h4 text-md-h3 text-lg-h1" style="color: white">{{ list.hr }}</div></v-card-title>
+                            <v-card-title class="justify-center info" ><div class="text-caption text-md-h4 text-lg-h2" style="color: white">{{ list.hr }}</div></v-card-title>
                             </v-container>
                             <v-card-text class="justify-end">
                                 <v-row class="justify-center">
@@ -52,7 +52,6 @@
   </template>
 
 <script>
-import { computed } from 'vue';
 
 export default{
     middleware: 'pasienStore',

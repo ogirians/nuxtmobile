@@ -16,7 +16,7 @@
                         >
                             mdi mdi-location-enter
                         </v-icon>
-                        daftar
+                        Lanjutkan
                     </v-btn>
                 </NuxtLink>
                 <!-- {{ $store.state.pasien.data_pasien }} -->

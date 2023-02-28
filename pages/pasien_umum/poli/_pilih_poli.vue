@@ -9,7 +9,7 @@
                     <v-card-title>
                         pendaftaran Umum
                     </v-card-title>
-                    <v-card-subtitle>silahkan pilih Poli untuk tanggal <b>{{ tgl_berkunjung.tgl }}</b></v-card-subtitle>
+                    <v-card-subtitle>silahkan pilih Poli untuk hari <b> {{tgl_berkunjung.hari}}</b>, tanggal <b>{{ tgl_berkunjung.tgl }}</b></v-card-subtitle>
                     <!-- <v-card-text>nama</v-card-text> -->
                 </v-card>
             </v-col>
@@ -71,8 +71,16 @@
                 
                 ></v-divider>
             </v-col>
+            <v-col v-for="lim in subSkeleton.length" cols="12" md="6" xl="3" v-if= "isLoadingSub">
+                <v-skeleton-loader
+                class="mx-auto"
+                max-width="300"
+                type="card"
+                >
+                </v-skeleton-loader>
+            </v-col>
             <v-col
-            v-if="list_SubDivisi.length > 0"
+            v-if="list_SubDivisi.length > 0 && isLoadingSub == false"
             v-for="list in list_SubDivisi"
             cols="12" md="6" xl="3"
             >
@@ -118,23 +126,110 @@
                 <v-btn class="info" small @click="fetcPoli()">reload</v-btn>
             </v-col>
         </v-row>
+        <v-dialog
+            v-model="dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+            >
+            <v-card>
+                <v-toolbar
+                dark
+                color="#385F73"
+                >
+                <v-btn
+                    icon
+                    dark
+                    @click="dialog = false"
+                >
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Ringkasan Pendaftaran</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <!-- <v-toolbar-items> -->
+                    <!-- <v-btn
+                    dark
+                    text
+                    @click="dialog = false"
+                    >
+                    Daftar
+                    </v-btn> -->
+                    <v-btn @click = "simpanPendaftaran()" color="green" class="mx-2 my-3 mt-3" small>
+                        <v-icon
+                            dark
+                            left
+                        >
+                            mdi mdi-location-enter
+                        </v-icon>
+                        Mendaftar
+                    </v-btn>
+                <!-- </v-toolbar-items> -->
+                </v-toolbar>
+                <v-simple-table light class="mt-5">
+                    <template v-slot:default>
+                        <tbody>
+                            <tr>
+                                <td class="headder">NO RM</td>
+                                <td>{{$store.state.pasien.data_pasien.no_rekam_medik}}</td>
+                            </tr>
+                            <tr>
+                                <td class="headder">Nama Pasien</td>
+                                <td>{{$store.state.pasien.data_pasien.nama_pasien}}</td>
+                            </tr>
+                            <tr>
+                                <td class="headder">Tanggal Pendaftaran</td>
+                                <td>{{$store.state.global.tanggal.hari}} - {{$store.state.global.tanggal.tgl}}</td>
+                            </tr>
+                            <tr>
+                                <td class="headder">Poli</td>
+                                <td>{{$store.state.global.poli}}</td>
+                            </tr>
+                            <tr>
+                                <td class="headder">Sub Poli</td>
+                                <td>{{$store.state.global.subDivisi ? $store.state.global.subDivisi : '-'}} </td>
+                            </tr>
+                            <tr>
+                                <td class="headder">Jenis Pendaftaran</td>
+                                <td>Umum</td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+            </v-card>
+            <v-overlay :value="overlaySimpan">
+                <v-progress-circular
+                    indeterminate
+                    size="64"
+                ></v-progress-circular>
+            </v-overlay>
+        </v-dialog>
     </v-container>
 </template>
 
 <script>
 export default{
-    middleware: 'pasienStore',
+    // middleware: 'pasienStore',
     data(){
         return {
+            //dialog
+            dialog: false,
+            overlaySimpan : false,
+            notifications: false,
+            sound: true,
+            widgets: false,
+            //data
             tgl_berkunjung : this.$route.params.data_tgl ?  this.$route.params : this.$store.state.global.tanggal,
             list_poli : [],
             list_SubDivisi : [],
             isLoading : false,
+            isLoadingSub : false,
             cari: '',
             limit : 6,
             offset: 0,
             poli_pilihan : '',
-            subDivisi_pilihan : ''
+            subDivisi_pilihan : '',
+            subSkeleton : [1,2]
+            
 
         }
     },
@@ -171,7 +266,7 @@ export default{
             })
         },
         async fetchSubDivisi(){
-            
+            this.isLoadingSub = true;
             await this.$apirsds.$get('/api/umum/poli-subdivisi/' + this.poli_pilihan.ruangan_id
             ).then(Response => {
                 if (Response.result.length > 0){
@@ -179,8 +274,11 @@ export default{
                         this.list_SubDivisi.push(data);
                     })
                 } else {
-                    this.$router.push({name : 'pasien_umum-ringkasan'})
+                    // this.$router.push({name : 'pasien_umum-ringkasan'})
+                    this.dialog = true;
+                    
                 }
+                this.isLoadingSub = false;
             })
         },
         async searchPoli(){
@@ -221,8 +319,13 @@ export default{
             this.subDivisi_pilihan = data;
             this.$store.commit('pendaftaran/set_jeniskasuspenyakit_id', this.subDivisi_pilihan.jeniskasuspenyakit_id);
             this.$store.commit('global/set_subDivisi', this.subDivisi_pilihan.jeniskasuspenyakit_nama);
-            this.$router.push({name : 'pasien_umum-ringkasan'});
+            // this.$router.push({name : 'pasien_umum-ringkasan'});
+            this.dialog = true;
+        },
+        async simpanPendaftaran(){
+            this.overlaySimpan = true ;
 
+            await setTimeout(() => {this.overlaySimpan = false}, 3000)
         }
     },
     computed: {
@@ -240,7 +343,7 @@ export default{
     mounted(){
         this.fetcPoli();
         if (this.tgl_berkunjung == ''){
-            this.$router.push({name : 'index'})
+            // this.$router.push({name : 'index'})
         }else{
             this.$store.commit('pendaftaran/set_day', this.tgl_berkunjung.hari);
             this.$store.commit('pendaftaran/set_date', this.tgl_berkunjung.data_tgl);
@@ -249,3 +352,8 @@ export default{
     }
 }
 </script>
+<style>
+    td.headder{
+        font-weight: bold;
+    }
+</style>
