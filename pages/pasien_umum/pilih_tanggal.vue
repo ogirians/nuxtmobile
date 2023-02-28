@@ -23,7 +23,7 @@
                 v-slot="{ hover }"
                 open-delay="200"
                 >
-                    <NuxtLink :to="{name : 'pasien_umum-poli-pilih_poli', params : {data_tgl : list.value, tgl : list.tgl}}" style="text-decoration: none">
+                    <NuxtLink :to="{name : 'pasien_umum-poli-pilih_poli', params : {data_tgl : list.value, tgl : list.tgl, hari: list.hr}}" style="text-decoration: none">
                         <v-card
                         :elevation="hover ? 16 : 2"
                         :class="{ 'on-hover': hover }"  
@@ -55,6 +55,7 @@
 import { computed } from 'vue';
 
 export default{
+    middleware: 'pasienStore',
     data(){
      return{
         today : this.$moment().add(1, 'days').format('YYYY-MM-DD'),
@@ -69,16 +70,18 @@ export default{
             let hari_set = '';
     
             for (let i = 0; i < banyak_hari; i++) {
-                
-                hari_set = this.$moment().add(i, 'days').format('YYYY-MM-DD');
+                hari_set = this.$moment().add(i, 'days').format('YYYY-MM-DD 00:00:00');
                 tanggal = this.$moment().add(i, 'days').format('DD MMMM YYYY');
-                hari = this.$moment().add(i, 'days').format('DD');
+                hari = this.$moment().add(i, 'days').format('dddd');
                 this.listTanggal.push({tgl : tanggal, hr : hari, value : hari_set});
             } 
         }
     },
     mounted(){
         this.setHari();
+        // if (this.$store.state.pasien.data_pasien == ''){
+        //     this.$router.push({name : 'index'})
+        // }
     }
 
 }

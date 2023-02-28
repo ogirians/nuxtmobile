@@ -42,7 +42,7 @@
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>Instalasi Teknologi Komunikasi dan Informasi &copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
 </template>
