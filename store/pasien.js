@@ -9,4 +9,7 @@ set(state, data) {
 remove(state, { data }) {
     state.list.pasien = ''
 },
+clear(state){
+    state.data_pasien = ''
+}
 }

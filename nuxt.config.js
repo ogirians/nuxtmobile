@@ -52,7 +52,7 @@ export default {
   },
 
   proxy: {
-    '/api/': { target: 'http://172.9.1.63/api/', pathRewrite: {'^/api/': ''}, changeOrigin: true }
+    '/api/': { target: 'http://api.pendaftaran.demo/api/', pathRewrite: {'^/api/': ''}, changeOrigin: true }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

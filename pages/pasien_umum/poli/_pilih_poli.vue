@@ -198,9 +198,32 @@
             </v-card>
             <v-overlay :value="overlaySimpan">
                 <v-progress-circular
+                    v-if = "loadingSimpan"
                     indeterminate
                     size="64"
                 ></v-progress-circular>
+                <v-slide-y-transition>
+                    <div v-if = "berhasilSimpan"
+                         class="pa-7 green rounded-circle d-inline-block">
+                        <v-icon
+                            color="white"
+                            large
+                            size="80"
+                        >mdi mdi-check-outline
+                        </v-icon>
+                    </div>
+                </v-slide-y-transition>
+                <v-slide-y-transition>
+                    <div v-if = "gagalSimpan"
+                         class="pa-7 error rounded-circle d-inline-block">
+                        <v-icon
+                            color="white"
+                            large
+                            size="100"
+                        >mdi mdi-close
+                        </v-icon>
+                    </div>
+                </v-slide-y-transition>
             </v-overlay>
         </v-dialog>
     </v-container>
@@ -208,12 +231,15 @@
 
 <script>
 export default{
-    // middleware: 'pasienStore',
+    middleware: 'pasienStore',
     data(){
         return {
             //dialog
             dialog: false,
             overlaySimpan : false,
+            loadingSimpan : false,
+            berhasilSimpan : false,
+            gagalSimpan : false,
             notifications: false,
             sound: true,
             widgets: false,
@@ -229,8 +255,6 @@ export default{
             poli_pilihan : '',
             subDivisi_pilihan : '',
             subSkeleton : [1,2]
-            
-
         }
     },
     methods: {
@@ -275,6 +299,7 @@ export default{
                     })
                 } else {
                     // this.$router.push({name : 'pasien_umum-ringkasan'})
+                    // this.$store.commit('pendaftaran/set_jeniskasuspenyakit_id', '-')
                     this.dialog = true;
                     
                 }
@@ -284,8 +309,6 @@ export default{
         async searchPoli(){
             this.isLoading = true;
             this.list_poli = [];
-            // var token = localStorage.getItem("authToken");
-            // this.$apirsds.setHeader('x-authorization-token', token);
             await this.$apirsds.$post('/api/umum/search-poli', {ruangan_nama : this.cari}
             ).then(Response => { 
                 Response.result.forEach(data => {
@@ -302,7 +325,7 @@ export default{
         
             })
         },
-        async setPoli(data){
+        setPoli(data){
             this.list_poli = [];
             this.list_poli.push(data); 
             this.poli_pilihan = data;
@@ -315,17 +338,49 @@ export default{
             this.$store.commit('global/set_subDivisi', '')
 
         },
-        async setSubDivisi(data){
+        setSubDivisi(data){
             this.subDivisi_pilihan = data;
             this.$store.commit('pendaftaran/set_jeniskasuspenyakit_id', this.subDivisi_pilihan.jeniskasuspenyakit_id);
             this.$store.commit('global/set_subDivisi', this.subDivisi_pilihan.jeniskasuspenyakit_nama);
             // this.$router.push({name : 'pasien_umum-ringkasan'});
             this.dialog = true;
         },
+
+       prosesSimpan(){
+
+        return new Promise(resolve => {
+
+            this.$apirsds.post('/api/umum/buat-janji-poli',this.$store.state.pendaftaran.form_pendaftaran)
+            .then(Response => {
+                setTimeout(() => {this.loadingSimpan = false}, 1500);
+                setTimeout(() => {this.berhasilSimpan = true}, 1500);
+                setTimeout(() => {this.berhasilSimpan = false}, 3000);
+                setTimeout(resolve(Response), 4500);
+            }).catch(error => {
+                console.log(error.response.data.message)
+            })
+        })
+
+        },
+
         async simpanPendaftaran(){
             this.overlaySimpan = true ;
-
-            await setTimeout(() => {this.overlaySimpan = false}, 3000)
+            this.loadingSimpan = true ;
+            
+            await this.$apirsds.post('/api/umum/buat-janji-poli',this.$store.state.pendaftaran.form_pendaftaran
+            ).then(Response => {
+                // console.log(Response.data.result.no_urutantri_subpoli);
+                this.$store.commit('global/set_no_antrian', Response.data.result.no_urutantri_subpoli);
+                this.$store.commit('pendaftaran/hapus_form')
+                setTimeout(() => {this.loadingSimpan = false}, 1500);
+                setTimeout(() => {this.berhasilSimpan = true}, 1500);
+                setTimeout(() => {this.berhasilSimpan = false}, 3000);
+                setTimeout(() => {this.$router.push({name:'pasien_umum-cetak'})}, 5000);
+                
+            }).catch(error => {
+                console.log(error)
+            })
+            
         }
     },
     computed: {

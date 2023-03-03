@@ -24,7 +24,16 @@ export const mutations = {
     set_date(state, data) {
     state.form_pendaftaran.date = data;
     },
-
+    hapus_form(state) {
+        state.form_pendaftaran = 
+        {  
+            ruangan_id : '',
+            pasien_id : '',
+            jeniskasuspenyakit_id : '',
+            day : '',
+            date : '',
+        } 
+    }
     // remove(state, { data }) {
 //    state.form_pendaftaran = '';
 // 

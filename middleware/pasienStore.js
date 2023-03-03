@@ -1,6 +1,6 @@
 export default function ({ store, redirect }) {
-    // If the user is not authenticated
-    if (store.state.pasien.data_pasien == '') {
+    // If pasien id tidak di temukan
+    if (store.state.pendaftaran.form_pendaftaran.pasien_id == '') {
       return redirect('/')
     }
   }

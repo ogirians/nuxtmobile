@@ -123,6 +123,10 @@ export default {
         },
       ],
     }
+  },
+  mounted(){
+      this.$store.commit('pasien/clear');
+      this.$store.commit('global/clear_state');
   }
 }
 </script>
