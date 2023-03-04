@@ -1,10 +1,6 @@
 <template>
-    <v-container>
-        <!-- <v-row class="mt-3 mb-3 justify-end">
-            <v-btn dark flat color="green" class="ma-3">
-                <v-icon>mdi mdi-arrow-left</v-icon>
-            </v-btn>
-        </v-row> -->
+  <div>
+    <v-container id="cetak">
         <v-card class="mx-auto" max-width="500">
             <v-card-text class="text-h8 text-md-h5 text-center">
                 <b>RSUD Dr. Soetomo </b><br>
@@ -39,8 +35,8 @@
                       </v-icon>
                     </v-btn>
                   </NuxtLink>
-                  <NuxtLink to="/">
-                    <v-btn color="info" small class="mr-3">
+                  <!-- <NuxtLink to="/"> -->
+                    <v-btn @click="exportToPDF()" color="info" small class="mr-3">
                       <v-icon
                         dark
                         center
@@ -49,14 +45,21 @@
                       mdi mdi-download
                       </v-icon>
                     </v-btn>
-                  </NuxtLink>
+                  <!-- </NuxtLink> -->
             </v-card-actions>
         </v-card>
-    </v-container>
+      </v-container>
+      <div class="d-none" id="cetak2">
+          <CetakPDF />
+          <!-- <a>pdf halaman</a> -->
+      </div>
+  </div>
 </template>
 
 <script>
-import QrcodeVue from 'qrcode.vue'
+import QrcodeVue from 'qrcode.vue';
+import html2pdf from "html2pdf.js";
+
 export default{
         // middleware: 'pasienStore'
         data() {
@@ -67,6 +70,27 @@ export default{
         },
         components: {
             QrcodeVue,
-        },  
+        }, 
+        methods : {
+          exportToPDF() {
+            const options = {
+              margin: [5, 5, 5, 5], // Set the margins of the PDF
+              filename: 'my-document.pdf', // Set the name of the PDF file
+              image: { type: 'jpeg', quality: 2 }, // Set the image quality of the PDF
+              html2canvas: { scale: 4 }, // Set the scale of the PDF
+              jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, // Set the format and orientation of the PDF
+            };
+
+            const element = document.getElementById("cetak2");
+
+            html2pdf().set(options).from(element).save();
+
+            // html2pdf(document.getElementById("cetak2"), {
+            //   margin: 1,
+            //   filename: "pendaftaran.pdf",
+            //   options : options
+            // });
+          },
+        } 
     }
 </script>
