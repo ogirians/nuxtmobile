@@ -17,7 +17,7 @@
             </v-col>
             <v-col
             v-for="list in listTanggal"
-            cols="4"
+            class="col-6 col-md-4"
             >
                 <v-hover
                 v-slot="{ hover }"
