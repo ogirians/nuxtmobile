@@ -285,13 +285,11 @@ export default{
                     this.$router.push({name : 'index'})
                 }
                 console.log(error.response.data.message);
-                
-        
             })
         },
         async fetchSubDivisi(){
             this.isLoadingSub = true;
-            await this.$apirsds.$get('/api/umum/poli-subdivisi/' + this.poli_pilihan.ruangan_id
+            await this.$apirsds.$get('/api/umum/poli-subdivisi/all/'+this.poli_pilihan.ruangan_id+'/'+this.$moment(this.$store.state.global.tanggal.data_tgl).format('YYYY-MM-DD')
             ).then(Response => {
                 if (Response.result.length > 0){
                     Response.result.forEach(data => {
@@ -344,23 +342,6 @@ export default{
             this.$store.commit('global/set_subDivisi', this.subDivisi_pilihan.jeniskasuspenyakit_nama);
             // this.$router.push({name : 'pasien_umum-ringkasan'});
             this.dialog = true;
-        },
-
-       prosesSimpan(){
-
-        return new Promise(resolve => {
-
-            this.$apirsds.post('/api/umum/buat-janji-poli',this.$store.state.pendaftaran.form_pendaftaran)
-            .then(Response => {
-                setTimeout(() => {this.loadingSimpan = false}, 1500);
-                setTimeout(() => {this.berhasilSimpan = true}, 1500);
-                setTimeout(() => {this.berhasilSimpan = false}, 3000);
-                setTimeout(resolve(Response), 4500);
-            }).catch(error => {
-                console.log(error.response.data.message)
-            })
-        })
-
         },
 
         async simpanPendaftaran(){

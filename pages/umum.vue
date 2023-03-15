@@ -138,19 +138,19 @@ export default{
 
             this.isLoading = true;
             await this.$apirsds.$post('/api/umum/verify-patient', 
-                {
-                    type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
-                    number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
-                    date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
-                }
-                // this.form
+                // {
+                //     type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
+                //     number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
+                //     date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
+                // }
+                this.form
             ).then(Response => { 
-                this.data_pasien = Response.result;
-                this.$router.push({name : 'pasien_umum-info-pasienInfo', params: this.data_pasien})
-                localStorage.setItem("authToken", Response.token)
-                this.$store.commit('pasien/set', Response.result)
-                this.$store.commit('pendaftaran/set_pasien_id', Response.result.pasien_id)
-                this.$apirsds.setHeader('x-authorization-token', Response.token);
+                this.data_pasien = Response.result.data_pasien;
+                this.$router.push({name : 'pasien_umum-info-pasienInfo', params: { pasien : this.data_pasien, status : Response.result.status_pendaftaran}})
+                localStorage.setItem("authToken", Response.result.token)
+                this.$store.commit('pasien/set', Response.result.data_pasien)
+                this.$store.commit('pendaftaran/set_pasien_id', Response.result.data_pasien.pasien_id)
+                this.$apirsds.setHeader('x-authorization-token', Response.result.token);
             }).catch(error => {
                 console.log(error.response.data.message);
                 this.tampilkan_warning = true;
