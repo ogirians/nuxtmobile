@@ -1,9 +1,7 @@
 <template>
     <v-container>
         <!-- <v-col cols="12"> -->
-            <v-alert v-if ="status_pendaftaran == true" type="error" dismissible transition="slide-bottom">
-            anda sudah melakukan pendaftaran, silahkan melakukan pembatalan terlebih dahulu
-            </v-alert>
+            <AlertPendaftaran v-if ="status_pendaftaran == true" />
         <!-- </v-col> -->
         <v-card
             color="#385F73"
@@ -33,39 +31,8 @@
                         </v-icon>
                         Lanjutkan
                 </v-btn>
-                
-                <!-- {{ $store.state.pasien.data_pasien }} -->
             </v-row>
-            <v-simple-table light>
-                <template v-slot:default>
-                     <tbody>
-                        <tr>
-                            <td>NO RM</td>
-                            <td>{{ data_pasien.no_rekam_medik }}</td>
-                        </tr>
-                        <tr>
-                            <td>Nama Pasien</td>
-                            <td>{{ data_pasien.nama_pasien }}</td>
-                        </tr>
-                        <tr>
-                            <td>Tanggal Lahir</td>
-                            <td>{{ data_pasien.tanggal_lahir }}</td>
-                        </tr>
-                        <tr>
-                            <td>Alamat Pasien</td>
-                            <td>{{ data_pasien.alamat_pasien }}</td>
-                        </tr>
-                        <tr>
-                            <td>Jenis Pasien</td>
-                            <td>Umum</td>
-                        </tr>
-                        <tr>
-                            <td>Jenis Kelamin</td>
-                            <td>{{ data_pasien.jeniskelamin }}</td>
-                        </tr>
-                    </tbody>
-                </template>
-            </v-simple-table>
+            <TabelinfoPasien :data_pasien_prop = "data_pasien" :jenis_pendaftaran_prop = "jenis_pendaftaran"/>
         </v-card>
     </v-container>
 </template>
@@ -73,32 +40,14 @@
 
 <script>
 export default{
+    middleware: 'pasienStore',
     data(){
         return{
-            data_pasien: this.$route.params.pasien,
+            data_pasien: this.$route.params.pasien ? this.$route.params.pasien : this.$store.state.pasien.data_pasien ,
             data_pasien_store : '',
-            status_pendaftaran : this.$route.params.status
+            status_pendaftaran : this.$route.params.status,
+            jenis_pendaftaran : 'umum'
         }
     },
-    methods: {
-        async cekPasienStore(){
-            this.data_pasien_store = this.$store.state.pasien.data_pasien;
-
-            // if(this.$route.params){
-            //     this.data_pasien = this.$route.params;
-            // }
-
-            if (this.data_pasien_store){
-                this.data_pasien = this.data_pasien_store;
-            } else{
-                this.$router.push({name: 'umum'});
-            }
-        }
-    }
-    ,
-    mounted(){
-        
-        this.cekPasienStore();
-    }
 }
 </script>

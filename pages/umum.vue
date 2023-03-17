@@ -1,17 +1,6 @@
 <template>
     <v-row>
-        <v-col cols="12">
-            <v-card
-            color="#385F73"
-            dark
-            >
-                <v-card-title>
-                    pendaftaran Umum
-                </v-card-title>
-                <v-card-subtitle>silahkan isi field berikut</v-card-subtitle>
-                <!-- <v-card-text>nama</v-card-text> -->
-            </v-card>
-        </v-col>
+        <CardIsiField :jenis_pendaftaran="'umum'" />
         <v-col cols="12">
             <v-alert type="error" dismissible v-model="tampilkan_warning" transition="slide-bottom">
             anda belum terdaftar, Silahkan datang ke Soetomo
@@ -138,12 +127,12 @@ export default{
 
             this.isLoading = true;
             await this.$apirsds.$post('/api/umum/verify-patient', 
-                // {
-                //     type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
-                //     number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
-                //     date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
-                // }
-                this.form
+                {
+                    type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
+                    number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
+                    date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
+                }
+                // this.form
             ).then(Response => { 
                 this.data_pasien = Response.result.data_pasien;
                 this.$router.push({name : 'pasien_umum-info-pasienInfo', params: { pasien : this.data_pasien, status : Response.result.status_pendaftaran}})
@@ -151,9 +140,11 @@ export default{
                 this.$store.commit('pasien/set', Response.result.data_pasien)
                 this.$store.commit('pendaftaran/set_pasien_id', Response.result.data_pasien.pasien_id)
                 this.$apirsds.setHeader('x-authorization-token', Response.result.token);
+                this.isLoading = false;
             }).catch(error => {
                 console.log(error.response.data.message);
                 this.tampilkan_warning = true;
+                this.isLoading = false;
             })
 
         }

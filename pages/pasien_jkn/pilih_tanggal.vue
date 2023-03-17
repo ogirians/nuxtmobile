@@ -2,7 +2,7 @@
     <v-container
       class="mx-auto"
     >
-        <PilihTanggal :jenis_pendaftaran="'umum'"/>
+        <PilihTanggal :jenis_pendaftaran="'jkn'"/>
     </v-container>
   </template>
 
