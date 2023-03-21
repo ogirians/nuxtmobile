@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "65e16afa-41e7-41bf-96f4-5c73ead39bb1",
+    "name": "api-rsds",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-03-21T06:47:11.444Z",
+    "modified": "2023-03-21T06:47:11.444Z",
+    "data": [
+      {
+        "name": "api-local",
+        "value": "http://api-local.rsudrsoetomo.jatimprov.go.id"
+      }
+    ]
+  }
+]

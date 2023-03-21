@@ -1,0 +1,536 @@
+[
+  {
+    "_id": "2160ff17-4809-4f12-a491-3cdee22ed126",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "71b0aaf5-62aa-4e72-8109-5877300e0f94",
+    "name": "get-holiday",
+    "url": "{{api-local}}/api/helper/get-holiday?start=2020-05-22&end=2020-05-30",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-03-21T06:41:40.039Z",
+    "modified": "2023-03-21T06:41:40.039Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "start",
+        "value": "2020-05-22"
+      },
+      {
+        "name": "end",
+        "value": "2020-05-30"
+      }
+    ]
+  },
+  {
+    "_id": "22f44fc6-2947-4f9d-86eb-67ee0d8debce",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "verifikasi-pasien-ktp",
+    "url": "{{api-local}}/api/umum/verify-patient",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2023-03-21T06:41:40.040Z",
+    "modified": "2023-03-21T06:41:40.040Z",
+    "headers": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"type_verify\": \"no_ktp\",\n  \"number\": 3578084907750003,\n  \"date_birth\": \"1975-07-09\"\n}"
+    }
+  },
+  {
+    "_id": "8255ffd0-c8ae-4c64-895f-225123f9a6b3",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "verifikasi-pasien-rm",
+    "url": "{{api-server}}/api/umum/verify-patient",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-03-21T06:41:40.041Z",
+    "modified": "2023-03-21T06:41:40.041Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "a",
+        "isDisabled": true
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"type_verify\": \"no_rekam_medik\",\n    \"number\": 10537536,\n    \"date_birth\": \"1901-01-01\"\n}"
+    }
+  },
+  {
+    "_id": "f271088d-7c7f-4db3-9f60-ce43937d003b",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "search-poli-rawat-jalan",
+    "url": "{{api-server}}/api/umum/search-poli",
+    "method": "POST",
+    "sortNum": 40000,
+    "created": "2023-03-21T06:41:40.042Z",
+    "modified": "2023-03-21T06:41:40.042Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"ruangan_nama\" : \"bedah\"\n}"
+    }
+  },
+  {
+    "_id": "19a70919-930c-4828-94bd-df548ee9f2ca",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "buat-janji-poli",
+    "url": "{{api-local}}/api/umum/buat-janji-poli",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2023-03-21T06:41:40.043Z",
+    "modified": "2023-03-21T06:41:40.043Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"ruangan_id\" : 9,\n    \"pasien_id\" : 1561105,\n    \"jeniskasuspenyakit_id\" : 243,\n    \"day\": \"Senin\",\n    \"date\": \"2023-03-13 15:34:31\"\n}"
+    }
+  },
+  {
+    "_id": "30a4808a-ff4e-41e3-8965-7cc58ce5a94d",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "get-list-poli-rawat-jalan-all",
+    "url": "{{api-server}}/api/umum/poli-rawat-jalan/all",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2023-03-21T06:41:40.044Z",
+    "modified": "2023-03-21T06:41:40.044Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ]
+  },
+  {
+    "_id": "938d7795-5979-4b62-93d5-99d18504888d",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "get-list-poli-rawat-jalan-with-limit-offset",
+    "url": "{{api-server}}/api/umum/poli-rawat-jalan/?limit=10&offset=0",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-03-21T06:41:40.045Z",
+    "modified": "2023-03-21T06:41:40.045Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "limit",
+        "value": "10"
+      },
+      {
+        "name": "offset",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "_id": "9cebbb14-3ff2-420d-9a56-09e0522d5bc3",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "get-list-poli-subdivisi-all",
+    "url": "{{api-local}}/api/umum/poli-subdivisi/all/{ruangan_id}/{tanggal_janji}",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2023-03-21T06:41:40.046Z",
+    "modified": "2023-03-21T06:41:40.046Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "ruangan_id",
+        "value": "9",
+        "isDisabled": false,
+        "isPath": true
+      },
+      {
+        "name": "tanggal_janji",
+        "value": "2023-03-13",
+        "isDisabled": false,
+        "isPath": true
+      }
+    ]
+  },
+  {
+    "_id": "f3e711cd-0b01-4886-a32d-c5b83ed9b9b6",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "fe8e5fad-1cd5-457b-bc74-36943854d567",
+    "name": "get-list-poli-subdivisi-with-limit-offset",
+    "url": "{{api-local}}/api/umum/poli-subdivisi/{ruangan_id}/{tanggal_janji}/?limit=10&offset=0",
+    "method": "GET",
+    "sortNum": 90000,
+    "created": "2023-03-21T06:41:40.047Z",
+    "modified": "2023-03-21T06:41:40.047Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "ruangan_id",
+        "value": "9",
+        "isDisabled": false,
+        "isPath": true
+      },
+      {
+        "name": "tanggal_janji",
+        "value": "2023-03-13",
+        "isDisabled": false,
+        "isPath": true
+      },
+      {
+        "name": "limit",
+        "value": "10"
+      },
+      {
+        "name": "offset",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "_id": "3a16a50a-3121-4569-9110-f51e7af2e5cb",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "verifikasi-pasien",
+    "url": "{{api-local}}/api/jkn/verify-patient",
+    "method": "POST",
+    "sortNum": 100000,
+    "created": "2023-03-21T06:41:40.048Z",
+    "modified": "2023-03-21T06:41:40.048Z",
+    "headers": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"no_bpjs\": \"0001648458887\",\n    \"date_birth\": \"1985-06-02\",\n    \"faskes\": 2\n}"
+    }
+  },
+  {
+    "_id": "d585e8ef-a4c2-4903-9373-15c11d27a34b",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "search-poli-jkn-rawat-jalan",
+    "url": "{{api-server}}/api/jkn/search-poli",
+    "method": "POST",
+    "sortNum": 110000,
+    "created": "2023-03-21T06:41:40.049Z",
+    "modified": "2023-03-21T06:41:40.049Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0b2tlbi1wZW5kYWZ0YXJhbiIsInN1YiI6IjEwNTM3NTM2IiwiaWF0IjoxNjc4MzQ1NjU3LCJleHAiOjE2NzgzNDkyNTd9.Xd_ACs1hi1Yias0SPjuGX9iPsQUXXAjhJOHvfh0pUH4"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"ruangan_nama\" : \"bedah\"\n}"
+    }
+  },
+  {
+    "_id": "4d8e3ad5-5372-4b51-92f3-af888283ec17",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "buat-janji-poli",
+    "url": "{{api-local}}/api/jkn/buat-janji-poli",
+    "method": "POST",
+    "sortNum": 120000,
+    "created": "2023-03-21T06:41:40.050Z",
+    "modified": "2023-03-21T06:41:40.050Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"ruangan_id\" : 508,\n    \"pasien_id\" :  835004,\n    \"jeniskasuspenyakit_id\" : 50,\n    \"day\": \"Senin\",\n    \"date\": \"2023-03-15 15:34:31\",\n    \"namaperujuk\": \"RS SITI KHODIJAH\",\n    \"tglkunjungan\": \"2022-12-26\",\n    \"kodeppt\": \"1303R003\",\n    \"no_rujukan\": \"1303R0031222B000175\",\n    \"diagnosa_rujukan\": \"I64 - Stroke, not specified as haemorrhage or infarction\",\n    \"kode_diagnosa\": \"I64\",\n    \"faskes\": 2\n}"
+    }
+  },
+  {
+    "_id": "3998a5e2-84c5-4339-8169-947f6723983a",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "buat-janji-poli-bpjs",
+    "url": "{{api-local}}/api/jkn/buat-janji-poli-bpjs",
+    "method": "POST",
+    "sortNum": 130000,
+    "created": "2023-03-21T06:41:40.051Z",
+    "modified": "2023-03-21T06:41:40.051Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"kode_subpoli\": \"SAR\",\n    \"pasien_id\": 835004,\n    \"day\": \"Senin\",\n    \"date\": \"2023-03-15 15:34:31\",\n    \"namaperujuk\": \"RS SITI KHODIJAH\",\n    \"tglkunjungan\": \"2022-12-26\",\n    \"kodeppt\": \"1303R003\",\n    \"no_rujukan\": \"1303R0031222B000175\",\n    \"diagnosa_rujukan\": \"I64 - Stroke, not specified as haemorrhage or infarction\",\n    \"kode_diagnosa\": \"I64\",\n    \"faskes\": 2\n}"
+    }
+  },
+  {
+    "_id": "9b49cf25-6ab5-407f-a05e-b57ccba532cd",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "get-list-poli-rawat-jalan-all",
+    "url": "{{api-local}}/api/jkn/poli-rawat-jalan/all",
+    "method": "GET",
+    "sortNum": 140000,
+    "created": "2023-03-21T06:41:40.052Z",
+    "modified": "2023-03-21T06:41:40.052Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "body": {
+      "type": "binary"
+    },
+    "auth": {
+      "type": "none"
+    }
+  },
+  {
+    "_id": "493695fe-90b0-4e66-a86b-e2c918897f28",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "get-list-poli-rawat-jalan-with-limit-offset",
+    "url": "{{api-server}}/api/jkn/poli-rawat-jalan/?limit=2&offset=2",
+    "method": "GET",
+    "sortNum": 150000,
+    "created": "2023-03-21T06:41:40.053Z",
+    "modified": "2023-03-21T06:41:40.053Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json; charset=utf-8"
+      },
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "limit",
+        "value": "2"
+      },
+      {
+        "name": "offset",
+        "value": "2"
+      }
+    ],
+    "auth": {
+      "type": "none"
+    }
+  },
+  {
+    "_id": "ee812cfb-0f65-4760-a8d0-bf6d266f153d",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "get-list-poli-subdivisi-all",
+    "url": "{{api-local}}/api/jkn/poli-subdivisi/all/{ruangan_id}/{tanggal_janji}",
+    "method": "GET",
+    "sortNum": 160000,
+    "created": "2023-03-21T06:41:40.054Z",
+    "modified": "2023-03-21T06:41:40.054Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json; charset=utf-8"
+      },
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "ruangan_id",
+        "value": "513",
+        "isDisabled": false,
+        "isPath": true
+      },
+      {
+        "name": "tanggal_janji",
+        "value": "2023-03-13",
+        "isDisabled": false,
+        "isPath": true
+      }
+    ],
+    "auth": {
+      "type": "none"
+    }
+  },
+  {
+    "_id": "48d17b73-8e4d-4036-b7f4-5c3eae7fa366",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "6d7300ae-33c7-41a2-9f34-a59f8df3eae6",
+    "name": "get-list-poli-subdivisi-with-limit-offset",
+    "url": "{{api-local}}/api/jkn/poli-subdivisi/{ruangan_id}/{tanggal_janji}/?limit=1&offset=0",
+    "method": "GET",
+    "sortNum": 170000,
+    "created": "2023-03-21T06:41:40.055Z",
+    "modified": "2023-03-21T06:41:40.055Z",
+    "headers": [
+      {
+        "name": "Content-Type",
+        "value": "application/json; charset=utf-8"
+      },
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "ruangan_id",
+        "value": "508",
+        "isDisabled": false,
+        "isPath": true
+      },
+      {
+        "name": "tanggal_janji",
+        "value": "2023-03-13",
+        "isDisabled": false,
+        "isPath": true
+      },
+      {
+        "name": "limit",
+        "value": "1"
+      },
+      {
+        "name": "offset",
+        "value": "0"
+      }
+    ],
+    "auth": {
+      "type": "none"
+    }
+  },
+  {
+    "_id": "d8f415b3-df86-48af-a911-f02800b83ad2",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "19777537-0fd1-4bf5-bd42-0d5c91a64eb9",
+    "name": "verifikasi-pasien-ktp",
+    "url": "{{api-local}}/api/cancel/verify-patient",
+    "method": "POST",
+    "sortNum": 180000,
+    "created": "2023-03-21T06:41:40.056Z",
+    "modified": "2023-03-21T06:47:42.652Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"type_verify\": \"no_ktp\",\n  \"number\": 3515164206650010,\n  \"date_birth\": \"1985-06-02\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "56a00b05-6645-4dfc-a123-f798e15688fd",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "19777537-0fd1-4bf5-bd42-0d5c91a64eb9",
+    "name": "verifikasi-pasien-rm",
+    "url": "{{api-local}}/api/cancel/verify-patient",
+    "method": "POST",
+    "sortNum": 190000,
+    "created": "2023-03-21T06:41:40.057Z",
+    "modified": "2023-03-21T06:41:40.057Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "a",
+        "isDisabled": true
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n    \"type_verify\": \"no_rekam_medik\",\n    \"number\": 10537536,\n    \"date_birth\": \"1901-01-01\"\n}"
+    }
+  },
+  {
+    "_id": "a0a5b544-03b3-4eba-a57b-048d54a0d603",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "19777537-0fd1-4bf5-bd42-0d5c91a64eb9",
+    "name": "cancel-janji-poli",
+    "url": "{{api-local}}/api/cancel/janji-poli/7",
+    "method": "DELETE",
+    "sortNum": 200000,
+    "created": "2023-03-21T06:41:40.058Z",
+    "modified": "2023-03-21T06:49:16.590Z",
+    "headers": [
+      {
+        "name": "x-authorization-token",
+        "value": "{{token}}"
+      }
+    ],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "eafb1290-c8d2-4ef4-86f2-0206a6c2097a",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "5ce58900-eae5-4c82-8b3b-62d4cb5e8986",
+    "name": "New Request",
+    "url": "",
+    "method": "GET",
+    "sortNum": 210000,
+    "created": "2023-03-21T06:41:40.059Z",
+    "modified": "2023-03-21T06:41:40.059Z",
+    "headers": []
+  },
+  {
+    "_id": "7e8d0359-d7eb-4186-8ed4-1d0c9f186426",
+    "colId": "cee40554-7349-4a79-8009-42843f214bd7",
+    "containerId": "dfc561bc-1c5d-4547-9cf4-2530b5bad373",
+    "name": "get-token",
+    "url": "{{api-local}}/api/webservice-antrean/token",
+    "method": "GET",
+    "sortNum": 220000,
+    "created": "2023-03-21T06:41:40.060Z",
+    "modified": "2023-03-21T06:41:40.060Z",
+    "headers": [
+      {
+        "name": "x-username",
+        "value": "rsds"
+      },
+      {
+        "name": "x-password",
+        "value": "bpjssoetomo2023"
+      }
+    ]
+  }
+]

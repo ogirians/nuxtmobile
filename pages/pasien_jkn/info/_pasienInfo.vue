@@ -58,7 +58,7 @@
                             <v-btn
                                 class="white--text mb-5"
                                 color="primary"
-                                @click="pilih_tanggal()"
+                                @click="pilih_tanggal('B')"
                                 small
                             >
                                 Ya
@@ -66,7 +66,7 @@
                             <v-btn
                                 class="white--text mb-5"
                                 color="teal"
-                                @click="pilih_tanggal()"
+                                @click="pilih_tanggal('A')"
                                 small
                             >
                                 Tidak, pilih poli lainnya
@@ -96,11 +96,23 @@ export default{
             status_pendaftaran : this.$route.params.status ? this.$route.params.status : false ,
             data_bpjs_pasien : this.$route.params.bpjs ? this.$route.params.bpjs : this.$store.state.pasien.data_bpjs_pasien.response ,
             jenis_pendaftaran : 'jkn',
-            overlay : false
+            overlay : false,
+            rujukan : this.$store.state.pasien.data_bpjs_pasien.response.rujukan
         }
     },
     methods : {
-        pilih_tanggal(){
+        pilih_tanggal(jenis_form){
+                 this.$store.commit('global/set_jenis_form',jenis_form)
+            // if(jenis_form == 'B'){
+                this.$store.commit('pendaftaran/set_kode_subpoli', this.rujukan.poliRujukan.kode);
+                this.$store.commit('pendaftaran/set_namaperujuk', this.rujukan.provPerujuk.nama);
+                this.$store.commit('pendaftaran/set_tglkunjungan',  this.rujukan.tglKunjungan);
+                this.$store.commit('pendaftaran/set_kodeppt', this.rujukan.provPerujuk.kode);
+                this.$store.commit('pendaftaran/set_no_rujukan',  this.rujukan.noKunjungan);
+                this.$store.commit('pendaftaran/set_diagnosa_rujukan', this.rujukan.diagnosa.nama);
+                this.$store.commit('pendaftaran/set_kode_diagnosa', this.rujukan.diagnosa.kode);
+                this.$store.commit('pendaftaran/set_faskes', this.$store.state.pasien.data_bpjs_pasien.response.asalFaskes);
+            // }
             this.$router.push({name : 'pasien_jkn-pilih_tanggal'})
         }
     }

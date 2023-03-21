@@ -20,7 +20,7 @@
                 <br>
                 <b>{{ $store.state.pasien.data_pasien.nama_pasien }}</b><br>
                 {{ $store.state.pasien.data_pasien.no_rekam_medik }}<br>
-                Pasien umum <br>
+                {{($store.state.global.jenis_form == 'C') ? 'Pasien Umum' : 'pasien JKN'}} <br>
                 tanggal berkunjung : <b>{{ $store.state.global.tanggal.hari}},  {{ $store.state.global.tanggal.tgl}}</b>
         </div>
     </div>

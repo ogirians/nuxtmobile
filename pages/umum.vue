@@ -127,12 +127,12 @@ export default{
 
             this.isLoading = true;
             await this.$apirsds.$post('/api/umum/verify-patient', 
-                {
-                    type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
-                    number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
-                    date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
-                }
-                // this.form
+                // {
+                //     type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
+                //     number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
+                //     date_birth: '1901-01-01', //content sebelah kiri merupakan nama yang ada di backend
+                // }
+                this.form
             ).then(Response => { 
                 this.data_pasien = Response.result.data_pasien;
                 this.$router.push({name : 'pasien_umum-info-pasienInfo', params: { pasien : this.data_pasien, status : Response.result.status_pendaftaran}})

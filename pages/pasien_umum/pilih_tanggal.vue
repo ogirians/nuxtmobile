@@ -2,7 +2,7 @@
     <v-container
       class="mx-auto"
     >
-        <PilihTanggal :jenis_pendaftaran="'umum'"/>
+        <PilihTanggal :prop_jenis_pendaftaran="'umum'"/>
     </v-container>
   </template>
 
@@ -19,7 +19,7 @@ export default{
         
     },
     mounted(){
-        
+        this.$store.commit('global/set_jenis_form', 'C')
     }
 
 }
