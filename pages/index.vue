@@ -85,15 +85,17 @@
                 <v-card-subtitle>pendaftaran</v-card-subtitle>
   
                 <v-card-actions class="justify-end">
-                  <v-btn color="red">
-                    <v-icon
-                      dark
-                      left
-                    >
-                      mdi mdi-minus-circle-outline
-                    </v-icon>
-                    Batal
-                  </v-btn>
+                  <NuxtLink to="/batal">
+                    <v-btn color="red">
+                      <v-icon
+                        dark
+                        left
+                      >
+                        mdi mdi-minus-circle-outline
+                      </v-icon>
+                      Batal
+                    </v-btn>
+                  </NuxtLink>
                 </v-card-actions>
               </v-card>
             </v-hover>

@@ -1,6 +1,18 @@
 <template>
     <v-row>
-        <CardIsiField :jenis_pendaftaran="'umum'" />
+        <!-- <CardIsiField :jenis_pendaftaran="'umum'" /> -->
+        <v-col cols="12">
+            <v-card
+            color="#385F73"
+            dark
+            >
+                <v-card-title>
+                    Pembatalan pendaftaran
+                </v-card-title>
+                <v-card-subtitle>silahkan isi field berikut</v-card-subtitle>
+                <!-- <v-card-text>nama</v-card-text> -->
+            </v-card>
+        </v-col>
         <v-col cols="12">
             <v-alert type="error" dismissible v-model="tampilkan_warning" transition="slide-bottom">
             anda belum terdaftar, Silahkan datang ke Soetomo
@@ -126,7 +138,7 @@ export default{
         async verif_pasien(){
 
             this.isLoading = true;
-            await this.$apirsds.$post('/api/umum/verify-patient', 
+            await this.$apirsds.$post('/api/cancel/verify-patient', 
                 {
                     type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
                     number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
@@ -134,15 +146,19 @@ export default{
                 }
                 // this.form
             ).then(Response => { 
-                this.data_pasien = Response.result.data_pasien;
-                this.$router.push({name : 'pasien_umum-info-pasienInfo', params: { pasien : this.data_pasien, status : Response.result.status_pendaftaran}})
-                localStorage.setItem("authToken", Response.result.token)
-                this.$store.commit('pasien/set', Response.result.data_pasien)
-                this.$store.commit('pendaftaran/set_pasien_id', Response.result.data_pasien.pasien_id)
-                this.$apirsds.setHeader('x-authorization-token', Response.result.token);
+                console.log(Response)
+                
+                if(this.data_pasien = Response.result.data_pasien){
+                    this.data_pasien = Response.result.data_pasien;
+                    this.$store.commit('pasien/set', Response.result.data_pasien)
+                    this.$store.commit('pendaftaran/set_pasien_id', Response.result.data_pasien.pasien_id)
+                    // this.$apirsds.setHeader('x-authorization-token', Response.result.token);
+                    this.$router.push({name : 'informasi-pembatalan', params: {pasien : Response.result}})
+                }
+                // localStorage.setItem("authToken", Response.result.token)
                 this.isLoading = false;
             }).catch(error => {
-                console.log(error.response.data.message);
+                console.log(error);
                 this.tampilkan_warning = true;
                 this.isLoading = false;
             })

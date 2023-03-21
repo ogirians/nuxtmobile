@@ -1,13 +1,13 @@
 <template>
     <v-container>
         <!-- <v-col cols="12"> -->
-            <AlertPendaftaran v-if ="status_pendaftaran == true" />
+        <AlertPendaftaran v-if ="status_pendaftaran == true" />
         <!-- </v-col> -->
         <v-card
             color="#385F73"
             dark
             mt="5"
-            >
+        >
             <v-row 
             class="justify-end my-3 mx-3"
             >

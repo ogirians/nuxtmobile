@@ -10,6 +10,10 @@
       {
         "name": "api-local",
         "value": "http://api-local.rsudrsoetomo.jatimprov.go.id"
+      },
+      {
+        "name": "token",
+        "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0b2tlbi1wZW5kYWZ0YXJhbiIsInN1YiI6IjM1NzgwODQ5MDc3NTAwMDMiLCJpYXQiOjE2NzkzODY2MDEsImV4cCI6MTY3OTM5MDIwMX0.l74St6sZrH7vBLXvxUIPniKj1Bl8_IVZxYC57PGSI0U"
       }
     ]
   }
