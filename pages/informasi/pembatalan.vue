@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="d-flex flex-row-reverse mb-5">
+            <v-btn @click="batalkan()" color="error">batalkan</v-btn>
+        </div>
         <v-card
         color="#385F73"
         dark
@@ -30,6 +33,7 @@
             </v-row>
             <TabelinfoPasien :data_pasien_prop = "data_pasien"/>
         </v-card>
+        <OverlaySuccess :prop_overlay.sync="overlay" :success="success" :to="path"/>
     </div>
 </template>
 
@@ -39,8 +43,25 @@ export default{
         return{
             data_pasien: this.$route.params.pasien ? this.$route.params.pasien.data_pasien : this.$store.state.pasien.data_pasien,
             data_pasien_full : this.$route.params.pasien ? this.$route.params.pasien : this.$store.state.pasien.data_pasien,
-            id_janji_poli : this.$route.params.pasien.id_janji_poli
+            id_janji_poli : this.$route.params.pasien.id_janji_poli,
+            overlay : false,
+            success : true,
+            path : '/'
         }
+    },
+    methods: {
+        async batalkan(){
+            this.$apirsds.delete('/api/cancel/janji-poli/'+this.id_janji_poli)
+            .then(Response => {
+                console.log(Response)
+                this.overlay = true;
+            })
+            .catch(error => {
+                console.log(error)
+                this.success = false;
+                this.overlay = true
+            })
+        }        
     }
 }
 </script>
