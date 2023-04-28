@@ -49,6 +49,15 @@
 
 
 <style>
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.5s;

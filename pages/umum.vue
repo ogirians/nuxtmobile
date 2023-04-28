@@ -1,5 +1,6 @@
 <template>
     <v-row>
+        <!-- <p>{{ error }} test</p><p v-if="back_pressed">kembaliiii</p> -->
         <CardIsiField :jenis_pendaftaran="'umum'" />
         <v-col cols="12">
             <v-alert type="error" dismissible v-model="tampilkan_warning" transition="slide-bottom">
@@ -101,7 +102,9 @@
 </template>
 
 <script>
+
 export default{
+   
     data(){
         return {
             form : {
@@ -119,6 +122,8 @@ export default{
             menu2: false,
             isLoading : false,
             isLoadingKembali : false,
+            error: '',
+            back_pressed: false,
         }
     },
     methods: {
@@ -126,7 +131,7 @@ export default{
         async verif_pasien(){
 
             this.isLoading = true;
-            await this.$apirsds.$post('/api/umum/verify-patient', 
+            await this.$axios.$post('/api/umum/verify-patient', 
                 {
                     type_verify : 'no_rekam_medik', //ktprekammedik sebelah kiri merupakan nama yang ada di backend
                     number:   '10537536', //title sebelah kiri merupakan nama yang ada di backend
@@ -142,7 +147,8 @@ export default{
                 this.$apirsds.setHeader('x-authorization-token', Response.result.token);
                 this.isLoading = false;
             }).catch(error => {
-                console.log(error.response.data.message);
+                // console.log(error.response.data.message);
+                this.error = error;
                 this.tampilkan_warning = true;
                 this.isLoading = false;
             })

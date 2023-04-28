@@ -100,6 +100,39 @@
               </v-card>
             </v-hover>
           </v-col>
+          <v-col cols="12" sm="12" md="4">
+            <v-hover
+              v-slot="{ hover }"
+              open-delay="200"
+            >
+              <v-card
+                color="#385F73"
+                dark
+                :elevation="hover ? 16 : 2"
+                :class="{ 'on-hover': hover }"
+              >
+                <v-card-title class="text-h5">
+                  Cetak 
+                </v-card-title>
+  
+                <v-card-subtitle>pendaftaran</v-card-subtitle>
+  
+                <v-card-actions class="justify-end">
+                  <NuxtLink to="/print">
+                    <v-btn color="info">
+                      <v-icon
+                        dark
+                        left
+                      >
+                        mdi mdi-printer
+                      </v-icon>
+                      Cetak
+                    </v-btn>
+                  </NuxtLink>
+                </v-card-actions>
+              </v-card>
+            </v-hover>
+          </v-col>
       </v-row>
     </v-col>
   </v-row>

@@ -59,6 +59,8 @@
 <script>
 import QrcodeVue from 'qrcode.vue';
 import html2pdf from "html2pdf.js";
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Capacitor } from '@capacitor/core';
 
 export default{
         // middleware: 'pasienStore'
@@ -72,7 +74,7 @@ export default{
             QrcodeVue,
         }, 
         methods : {
-          exportToPDF() {
+          async exportToPDF() {
             const options = {
               margin: [5, 5, 5, 5], // Set the margins of the PDF
               filename: 'my-document.pdf', // Set the name of the PDF file
@@ -82,14 +84,28 @@ export default{
             };
 
             const element = document.getElementById("cetak2");
+            
+            if (Capacitor.getPlatform() === 'ios') {
+                console.log('Running on iOS');
+                // do something specific to iOS
+            } else if (Capacitor.getPlatform() === 'android') {
+                // do something specific to Android
+                console.log('Running on Android');
+                const pdfDataUri = await html2pdf().set(options).from(element).outputPdf('datauristring');
+                await Filesystem.writeFile({
+                    path: 'secrets/pendaftaran.pdf',
+                    data: pdfDataUri,
+                    directory: Directory.External,
+                    // encoding: 'base64',
+                    recursive: true
+                  });
 
-            html2pdf().set(options).from(element).save();
+            } else if (Capacitor.getPlatform() === 'web'){
+                console.log('Running on a web');
+                html2pdf().set(options).from(element).save();
+                // do something for any other platform
+            }
 
-            // html2pdf(document.getElementById("cetak2"), {
-            //   margin: 1,
-            //   filename: "pendaftaran.pdf",
-            //   options : options
-            // });
           },
         } 
     }

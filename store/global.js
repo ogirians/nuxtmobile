@@ -29,5 +29,6 @@ export const state = () => ({
         state.subDivisi  = '';
         state.tanggal = '';
         state.no_antrian = '';
+        state.jenis_form = '';
     }
 }

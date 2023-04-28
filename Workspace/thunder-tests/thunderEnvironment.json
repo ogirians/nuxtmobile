@@ -9,7 +9,7 @@
     "data": [
       {
         "name": "api-local",
-        "value": "http://api-local.rsudrsoetomo.jatimprov.go.id"
+        "value": "http://api.rsudrsoetomo.jatimprov.go.id"
       },
       {
         "name": "token",

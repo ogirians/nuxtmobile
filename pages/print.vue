@@ -1,6 +1,5 @@
 <template>
     <v-row>
-        
         <!-- <CardIsiField :jenis_pendaftaran="'umum'" /> -->
         <v-col cols="12">
             <v-card
@@ -8,15 +7,15 @@
             dark
             >
             <v-card-title>
-                Pembatalan pendaftaran test
+                Cetak pendaftaran
             </v-card-title>
-                <v-card-subtitle>silahkan isi field berikut</v-card-subtitle>
+            <v-card-subtitle>silahkan isi field berikut</v-card-subtitle>
                 <!-- <v-card-text>nama</v-card-text> -->
             </v-card>
         </v-col>
         <v-col cols="12">
             <v-alert type="error" dismissible v-model="tampilkan_warning" transition="slide-bottom">
-                {{ error }}
+                info {{ error }} 
             </v-alert>
         </v-col>
         <v-col cols="12">
@@ -136,7 +135,7 @@ export default{
         }
     },
     methods: {
-        //cek pasien apakah ada dalam database , harusnya gunakan fetch
+          //cek pasien apakah ada dalam database , harusnya gunakan fetch
         async verif_pasien(){
 
             this.isLoading = true;
@@ -148,17 +147,21 @@ export default{
                 }
                 // this.form
             ).then(Response => { 
-                console.log(Response)
-                
+                // console.log(Response)
                 if(Response.result.data_pasien){
                     this.data_pasien = Response.result.data_pasien;
                     this.$store.commit('pasien/set', Response.result.data_pasien)
                     this.$store.commit('pendaftaran/set_pasien_id', Response.result.data_pasien.pasien_id)
+                    this.$store.commit('global/set_poli',Response.result.data_poli_rj.ruangan_nama + ' - ' + Response.result.data_poli_rj.instalasi_nama)
+                    this.$store.commit('global/set_subDivisi', Response.result.data_sub_poli.jeniskasuspenyakit_nama)
+                    this.$store.commit('global/set_tanggal', {data_tgl : Response.result.data_pendaftaran.tgljadwal, hari : Response.result.data_pendaftaran.harijadwal, tgl : this.$moment(Response.result.data_pendaftaran.tgljadwal).format('DD MMMM YYYY')})
+                    this.$store.commit('global/set_no_antrian', Response.result.data_pendaftaran.no_urutantri_subpoli)
+                    this.$store.commit('global/set_jenis_form', 'C')
                     // this.$apirsds.setHeader('x-authorization-token', Response.result.token);
-                    this.$router.push({name : 'informasi-pembatalan', params: {pasien : Response.result}})
+                    this.$router.push({name : 'informasi-cetak', params: {pasien : Response.result}})
                 } else{
-                   this.error = 'tidak ada data pendaftaran'
-                   this.tampilkan_warning = true;
+                    this.error = 'tidak ada data pendaftaran'
+                    this.tampilkan_warning = true;
                 }
                 // localStorage.setItem("authToken", Response.result.token)
                 this.isLoading = false;
